@@ -3,7 +3,9 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "role")
 public class Roles {
@@ -11,11 +13,22 @@ public class Roles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
 
-    @Column(name = "eole_name")
+    @Column(name = "role_name")
     private String roleNme;
 
+    @Column(name = "create_date")
+    private Date createDate;
+
+    public Set<Users> getListUser() {
+        return ListUser;
+    }
+
+    public void setListUser(Set<Users> listUser) {
+        ListUser = listUser;
+    }
+
     @OneToMany(mappedBy = "role")
-    private List<Users> UserList;
+    private Set<Users> ListUser;
 
     public int getId() {
         return id;
@@ -33,11 +46,11 @@ public class Roles {
         this.roleNme = roleNme;
     }
 
-    public List<Users> getUserList() {
-        return UserList;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setUserList(List<Users> userList) {
-        UserList = userList;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }
