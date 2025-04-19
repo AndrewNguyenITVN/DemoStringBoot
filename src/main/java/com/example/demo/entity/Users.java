@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-@Entity(name = "user")
+@Entity(name = "users")
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +21,16 @@ public class Users {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "created_date")
-    private Date createdDate;
+    @Column(name = "create_date")
+    private Date createDate;
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -93,13 +101,6 @@ public class Users {
         this.password = password;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
 
     public Roles getRole() {
         return role;

@@ -2,7 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
-@Entity(name = "RatingRestaurant")
+@Entity(name = "rating_restaurant")
 public class RatingRestaurant {
 
     @Id
