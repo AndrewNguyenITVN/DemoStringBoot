@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.entity.Roles;
 import com.example.demo.entity.Users;
+import com.example.demo.modal.User;
+import com.example.demo.payload.request.SignUpRequest;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.imp.LoginServiceimp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,26 @@ public class LoginService implements LoginServiceimp {
         List<Users> listUser = userRepository.findByUsernameAndPassword(username, password);
 
         return listUser.size() > 0;
+    }
+
+    @Override
+    public Boolean addUser(SignUpRequest signUpRequest){
+
+        Roles role = new Roles();
+        role.setId(signUpRequest.getRoleId());
+
+        Users user = new Users();
+        user.setUsername(signUpRequest.getMail());
+        user.setFullName(signUpRequest.getFullname());
+        user.setPassword(signUpRequest.getPassword());
+        user.setRole(role);
+
+        try{
+            userRepository.save(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
 }
