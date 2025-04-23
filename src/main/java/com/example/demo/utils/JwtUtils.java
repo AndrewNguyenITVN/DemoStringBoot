@@ -17,4 +17,20 @@ public class JwtUtils {
         String jws = Jwts.builder().subject(data).signWith(key).compact();
         return jws;
     }
+
+    public boolean verifyToken(String token){
+        try{
+            SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(privateKey));
+//            System.out.println("Loaded JWT privateKey: " + privateKey);
+//            System.out.println("Loaded JWT Key: " + key);
+//            System.out.println("Loaded JWT Key: " + token);
+            Jwts.parser()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch(Exception e){
+            return false;
+        }
+    }
 }
