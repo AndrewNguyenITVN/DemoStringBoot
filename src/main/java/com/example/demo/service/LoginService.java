@@ -8,6 +8,7 @@ import com.example.demo.payload.request.SignUpRequest;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.imp.LoginServiceimp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class LoginService implements LoginServiceimp {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDTO> getAllUser(){
@@ -39,9 +43,9 @@ public class LoginService implements LoginServiceimp {
 
     @Override
     public Boolean checkLogin(String username, String password) {
-        List<Users> listUser = userRepository.findByUsernameAndPassword(username, password);
+        Users user = userRepository.findByUsername(username);
+        return  passwordEncoder.matches(password, user.getPassword());
 
-        return listUser.size() > 0;
     }
 
     @Override

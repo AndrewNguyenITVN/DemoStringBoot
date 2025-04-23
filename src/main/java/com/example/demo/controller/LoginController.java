@@ -4,10 +4,17 @@ import com.example.demo.payload.ResponseData;
 import com.example.demo.payload.request.SignUpRequest;
 import com.example.demo.repository.imp.LoginServiceimp;
 import com.example.demo.service.LoginService;
+import com.example.demo.utils.JwtUtils;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.crypto.SecretKey;
+
 
 @RestController
 @RequestMapping("/login")
@@ -16,14 +23,24 @@ public class LoginController {
     @Autowired
     LoginServiceimp loginServiceimp;
 
+    @Autowired
+    JwtUtils jwtUtils;
+
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestParam String username, String password) {
         ResponseData responseData = new ResponseData();
+
+//        SecretKey secretKey = Jwts.SIG.HS256.key().build();
+//        String secretString = Encoders.BASE64.encode(secretKey.getEncoded());
+//        System.out.println(secretString);
+
         if(loginServiceimp.checkLogin(username, password)){
-            responseData.setData(true);
+            String token = jwtUtils.generateToken(username);
+            responseData.setData(token);
 
         }else {
-            responseData.setData(false);
+            responseData.setData("");
+            responseData.setSuccess(false);
         }
         return new ResponseEntity<>(responseData, HttpStatus.OK);
 
