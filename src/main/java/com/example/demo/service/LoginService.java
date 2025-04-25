@@ -3,10 +3,9 @@ package com.example.demo.service;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Roles;
 import com.example.demo.entity.Users;
-import com.example.demo.modal.User;
 import com.example.demo.payload.request.SignUpRequest;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.repository.imp.LoginServiceimp;
+import com.example.demo.service.imp.LoginServiceimp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,7 +56,7 @@ public class LoginService implements LoginServiceimp {
         Users user = new Users();
         user.setUsername(signUpRequest.getMail());
         user.setFullName(signUpRequest.getFullname());
-        user.setPassword(signUpRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user.setRole(role);
 
         try{

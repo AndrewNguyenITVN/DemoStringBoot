@@ -1,4 +1,4 @@
-package com.example.demo.repository.imp;
+package com.example.demo.service.imp;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Users;

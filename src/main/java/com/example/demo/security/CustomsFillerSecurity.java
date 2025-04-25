@@ -44,7 +44,7 @@ public class CustomsFillerSecurity {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/login/**", "/restaurant/file/**").permitAll()
                         .anyRequest().authenticated()
                 );
                 //.httpBasic(Customizer.withDefaults());

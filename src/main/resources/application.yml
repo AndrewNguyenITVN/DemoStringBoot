@@ -10,6 +10,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  servlet:
+    multipart:
+      max-file-size: 10MB
 
 jwt:
   privateKey: Wyu0XaLHFb5ZiCMtiecEn8yC77FZ67xiCBFlvSSB+bU=
+
+FileUpload:
+  rootPath: D:\New folder
+
