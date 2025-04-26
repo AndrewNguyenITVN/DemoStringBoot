@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.payload.ResponseData;
 import com.example.demo.service.imp.FileServiceImp;
+import com.example.demo.service.imp.RestaurantServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -18,11 +19,25 @@ public class RestaurantController {
     @Autowired
     FileServiceImp fileServiceImp;
 
+    @Autowired
+    RestaurantServiceImp restaurantServiceImp;
+
     @PostMapping()
-    public ResponseEntity<?> createRestaurant(@RequestParam MultipartFile file){
+    public ResponseEntity<?> createRestaurant(
+            @RequestParam MultipartFile file,
+            @RequestParam String title,
+            @RequestParam String subtitle,
+            @RequestParam String description,
+            @RequestParam boolean is_freeship,
+            @RequestParam String address,
+            @RequestParam String open_date
+    ){
         ResponseData responseData = new ResponseData();
-        boolean isSave = fileServiceImp.savefile(file);
-        responseData.setData(isSave);
+
+        boolean isSuccess = restaurantServiceImp.insertRestaurant(file, title, subtitle, description, is_freeship, address, open_date);
+
+
+        responseData.setData(isSuccess);
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
