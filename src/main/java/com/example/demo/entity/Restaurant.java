@@ -115,6 +115,10 @@ public class Restaurant {
         isFreeship = freeship;
     }
 
+    public boolean getFreeship() {
+        return isFreeship;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -138,4 +142,5 @@ public class Restaurant {
     public void setListRatingRestaurant(Set<RatingRestaurant> listRatingRestaurant) {
         ListRatingRestaurant = listRatingRestaurant;
     }
+
 }
