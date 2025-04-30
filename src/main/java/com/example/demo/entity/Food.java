@@ -24,7 +24,7 @@ public class Food {
 
     @ManyToOne
     @JoinColumn(name = "cate_id")
-    private Catetory cateId;
+    private Category cateId;
 
     @OneToMany(mappedBy = "foodId")
     private Set<RatingFood> ListRatingFood;
@@ -88,11 +88,11 @@ public class Food {
         this.price = price;
     }
 
-    public Catetory getCateId() {
+    public Category getCateId() {
         return cateId;
     }
 
-    public void setCateId(Catetory cateId) {
+    public void setCateId(Category cateId) {
         this.cateId = cateId;
     }
 }

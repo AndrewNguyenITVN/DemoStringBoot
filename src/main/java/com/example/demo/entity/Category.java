@@ -5,15 +5,15 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-@Entity(name = "catetory")
-public class Catetory {
+@Entity(name = "category")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name_cate")
-    private String name_cate;
+    private String nameCate;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -41,12 +41,12 @@ public class Catetory {
         this.id = id;
     }
 
-    public String getName_cate() {
-        return name_cate;
+    public String getNameCate() {
+        return nameCate;
     }
 
-    public void setName_cate(String name_cate) {
-        this.name_cate = name_cate;
+    public void setNameCate(String nameCate) {
+        this.nameCate = nameCate;
     }
 
     public Date getCreateDate() {

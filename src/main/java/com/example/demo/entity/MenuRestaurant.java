@@ -13,7 +13,7 @@ public class MenuRestaurant {
 
     @ManyToOne
     @JoinColumn(name = "cate_id", insertable = false, updatable = false)
-    private Catetory cateId;
+    private Category cateId;
 
     @ManyToOne
     @JoinColumn(name = "res_id", insertable = false, updatable = false)
@@ -30,11 +30,11 @@ public class MenuRestaurant {
         this.key = key;
     }
 
-    public Catetory getCateId() {
+    public Category getCateId() {
         return cateId;
     }
 
-    public void setCateId(Catetory cateId) {
+    public void setCateId(Category cateId) {
         this.cateId = cateId;
     }
 

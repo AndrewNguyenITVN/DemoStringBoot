@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Catetory;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Food;
-import com.example.demo.entity.Restaurant;
 import com.example.demo.repository.FoodRepository;
 import com.example.demo.service.imp.FileServiceImp;
 import com.example.demo.service.imp.MenuServiceImp;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Service
 public class MemuService implements MenuServiceImp {
@@ -34,18 +31,11 @@ public class MemuService implements MenuServiceImp {
                 food.setTimeShip(time_ship);
                 food.setImage(file.getOriginalFilename());
                 food.setTimeShip(time_ship);
-
-                Catetory catetory = new Catetory();
+                Category catetory = new Category();
                 catetory.setId(cate_id);
-
                 food.setCateId(catetory);
-
-
                 foodRepository.save(food);
                 isInsertSuccess = true;
-
-
-
             }
         }catch(Exception e){
             System.out.println("Loi crate menu " + e.getMessage());
