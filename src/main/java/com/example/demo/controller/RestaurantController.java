@@ -42,7 +42,7 @@ public class RestaurantController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getHomeRestaurant(){
+    public ResponseEntity<?> getHomeRestaurant() {
 
         ResponseData responseData = new ResponseData();
 
