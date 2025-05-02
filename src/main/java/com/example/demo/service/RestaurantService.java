@@ -1,6 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CaterotyDTO;
+import com.example.demo.dto.FoodDTO;
 import com.example.demo.dto.RestaurantDTO;
+import com.example.demo.entity.Food;
+import com.example.demo.entity.MenuRestaurant;
 import com.example.demo.entity.RatingRestaurant;
 import com.example.demo.entity.Restaurant;
 import com.example.demo.repository.RestaurantRepository;
@@ -13,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class RestaurantService implements RestaurantServiceImp {
@@ -72,6 +73,45 @@ public class RestaurantService implements RestaurantServiceImp {
             restaurantDTOS.add(restaurantDTO);
         }
         return restaurantDTOS;
+    }
+
+    @Override
+    public RestaurantDTO getDetailRestaurant(int id) {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        RestaurantDTO restaurantDTO = new RestaurantDTO();
+        if(restaurant.isPresent()){
+            List<CaterotyDTO> caterotyDTOList = new ArrayList<>();
+            Restaurant data = restaurant.get();
+            restaurantDTO.setTitle(data.getTitle());
+            restaurantDTO.setSubTitle(data.getSubtitle());
+            restaurantDTO.setAddress(data.getAddress());
+            restaurantDTO.setFreeship(data.isFreeship());
+            restaurantDTO.setImage(data.getImage());
+            restaurantDTO.setRating(calculatorRating(data.getListRatingRestaurant()));
+            restaurantDTO.setOpenTime(data.getOpenDate());
+
+
+            for(MenuRestaurant menuRestaurant :data.getListMenuRestaurant()) {
+                CaterotyDTO caterotyDTO = new CaterotyDTO();
+                List<FoodDTO> foodDTOList = new ArrayList<>();
+
+                caterotyDTO.setName(menuRestaurant.getCateId().getNameCate());
+                for(Food food:menuRestaurant.getCateId().getListFood()){
+                    FoodDTO foodDTO = new FoodDTO();
+
+                    foodDTO.setImage(food.getImage());
+                    foodDTO.setTitle(food.getTitle());
+                    foodDTO.setTimeShip(food.getTimeShip());
+
+                    foodDTOList.add(foodDTO);
+                }
+                caterotyDTO.setMenus(foodDTOList);
+                caterotyDTOList.add(caterotyDTO);
+
+            }
+            restaurantDTO.setCateroties(caterotyDTOList);
+        }
+        return  restaurantDTO;
     }
 
 

@@ -2,7 +2,9 @@ package com.example.demo.dto;
 
 import jakarta.persistence.Column;
 
+
 import java.util.Date;
+import java.util.List;
 
 public class RestaurantDTO {
     private String title;
@@ -16,6 +18,26 @@ public class RestaurantDTO {
     private String address;
 
     private double rating;
+
+    private Date openTime;
+
+    List<CaterotyDTO> cateroties;
+
+    public Date getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(Date openTime) {
+        this.openTime = openTime;
+    }
+
+    public List<CaterotyDTO> getCateroties() {
+        return cateroties;
+    }
+
+    public void setCateroties(List<CaterotyDTO> cateroties) {
+        this.cateroties = cateroties;
+    }
 
     public String getTitle() {
         return title;
