@@ -82,6 +82,7 @@ public class RestaurantService implements RestaurantServiceImp {
         if(restaurant.isPresent()){
             List<CaterotyDTO> caterotyDTOList = new ArrayList<>();
             Restaurant data = restaurant.get();
+            restaurantDTO.setId((data.getId()));
             restaurantDTO.setTitle(data.getTitle());
             restaurantDTO.setSubTitle(data.getSubtitle());
             restaurantDTO.setAddress(data.getAddress());

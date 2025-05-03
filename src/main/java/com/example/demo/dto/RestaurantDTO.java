@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 public class RestaurantDTO {
+
+    private  int id;
+
     private String title;
 
     private String subTitle;
@@ -23,6 +26,13 @@ public class RestaurantDTO {
 
     List<CaterotyDTO> cateroties;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public Date getOpenTime() {
         return openTime;
     }
