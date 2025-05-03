@@ -1,0 +1,199 @@
+create database osahaneat;
+use osahaneat;
+
+create table roles(
+	id int auto_increment,
+    role_name varchar(20),
+    create_date timestamp,
+    
+    primary key(id)
+);
+
+create table users(
+	id int auto_increment,
+    user_name varchar(20),
+    password varchar(100),
+    fullname varchar(20),
+    create_date timestamp,
+    role_id int,
+    
+    primary key(id)
+);
+
+create table rating_food(
+	id int auto_increment,
+    user_id int,
+	food_id int,
+    content text,
+    rate_point int,
+    
+    primary key(id)
+);
+
+create table category(
+	id int auto_increment,
+    name_cate varchar(50),
+    create_date timestamp,
+    
+    primary key(id)
+);
+
+
+create table food( 
+	id int auto_increment,
+    tital varchar(225),
+    image text,
+    time_ship varchar(10),
+    price decimal,
+    cate_id int, 
+    
+    primary key(id)
+);
+
+
+create table rating_restaurant(
+	id int auto_increment,
+    user_id int,
+    res_id int,
+    content text,
+    rate_point int,
+    
+    primary key(id)
+);
+
+create table orders(
+	id int auto_increment,
+    user_id int, 
+    res_id int,
+    create_date timestamp,
+    
+    primary key(id)
+);
+
+create table menu_restaurant(
+	cate_id int,
+    res_id int,
+    create_date timestamp,
+    
+    primary key(cate_id, res_id)
+);
+
+create table restaurant(
+	id int auto_increment,
+	title text,
+    subtitle text,
+    description text,
+    image text,
+    is_freeship boolean,
+    address varchar(100),
+    open_date timestamp,
+    
+    primary key(id)
+);
+
+create table promo(
+	id int auto_increment,
+	res_id int,
+	percent int, 
+    start_date timestamp,
+    end_date timestamp,
+	
+    primary key(id)
+);
+
+
+create table order_item(
+	order_id int,
+    food_id int,
+    create_date timestamp,
+    
+    primary key(order_id, food_id)
+);
+
+alter table users add constraint fk_users_role_id foreign key(role_id) references roles(id);
+alter table rating_food add constraint fk_ratingfood_user_id foreign key(user_id) references users(id);
+alter table rating_food add constraint fk_ratingfood_food_id foreign key(food_id) references food(id);
+alter table food add constraint fk_food_cate_id foreign key(cate_id) references category(id);
+alter table rating_restaurant add constraint fk_ratingrestaurant_user_id foreign key(user_id) references users(id);
+alter table rating_restaurant add constraint fk_ratingrestaurant_res_id foreign key(res_id) references restaurant(id);
+alter table orders add constraint fk_orders_user_id foreign key(user_id) references users(id);
+alter table orders add constraint fk_orders_res_id foreign key(res_id) references restaurant(id);
+alter table order_item add constraint fk_orderitem_user_id foreign key(order_id) references orders(id);
+alter table order_item add constraint fk_orderitem_food_id foreign key(food_id) references food(id);
+alter table menu_restaurant add constraint fk_menurestaurant_cate_id foreign key(cate_id) references category(id);
+alter table menu_restaurant add constraint fk_menurestaurant_res_id foreign key(res_id) references restaurant(id);
+alter table promo add constraint fk_prome_res_id foreign key(res_id) references restaurant(id);
+
+insert into roles(role_name) values("Admin");
+insert into roles(role_name) values("Users");
+
+insert into users(user_name, password, fullname, create_date, role_id)
+values("nhut", "$2a$12$SLp1m8rlNxXxGgx5poEwhueOLx/Xv1PMo2xH22A1kNmR.a/1l1Km6users", "Nguyen Minh", "2025-4-3", 1);
+insert into users(user_name, password, fullname, create_date, role_id)
+values("minh", "$2a$12$SLp1m8rlNxXxGgx5poEwhueOLx/Xv1PMo2xH22A1kNmR.a/1l1Km6", "Nguyen nhut", "2025-4-3", 2);
+
+
+select * from category;
+select * from food;
+select * from roles;
+
+INSERT INTO restaurant (title, subtitle, description, image, is_freeship, address, open_date) VALUES
+('Nhà hàng A', 'Ẩm thực Việt', 'Mô tả A', 'a.jpg', TRUE, '123 Đường ABC', NOW()),
+('Nhà hàng B', 'Ẩm thực Âu', 'Mô tả B', 'b.jpg', FALSE, '456 Đường XYZ', NOW()),
+('Nhà hàng C', 'Hải sản', 'Mô tả C', 'c.jpg', TRUE, '789 Đường DEF', NOW()),
+('Nhà hàng D', 'Ăn vặt', 'Mô tả D', 'd.jpg', FALSE, '101 Đường GHI', NOW()),
+('Nhà hàng E', 'Chay', 'Mô tả E', 'e.jpg', TRUE, '102 Đường JKL', NOW()),
+('Nhà hàng F', 'Đồ nướng', 'Mô tả F', 'f.jpg', FALSE, '103 Đường MNO', NOW()),
+('Nhà hàng G', 'Đồ uống', 'Mô tả G', 'g.jpg', TRUE, '104 Đường PQR', NOW()),
+('Nhà hàng H', 'Đồ ngọt', 'Mô tả H', 'h.jpg', FALSE, '105 Đường STU', NOW());
+
+INSERT INTO food (tital, image, time_ship, price, cate_id) VALUES
+('Phở Bò', 'pho-bo.jpg', '30m', 50000, 1),
+('Pizza', 'pizza.jpg', '45m', 150000, 2),
+('Trà Sữa', 'tra-sua.jpg', '15m', 35000, 2),
+('Bánh Kem', 'banh-kem.jpg', '25m', 200000, 1),
+('Gỏi Cuốn', 'goi-cuon.jpg', '20m', 40000, 1),
+('Hàu Nướng', 'hau-nuong.jpg', '40m', 120000, 2),
+('Đậu Hủ', 'dau-hu.jpg', '15m', 30000, 1),
+('Nước Cam', 'nuoc-cam.jpg', '10m', 25000, 1);
+
+
+INSERT INTO rating_food (user_id, food_id, content, rate_point) VALUES
+(1, 10, 'Ngon lắm!', 5),
+(2, 12, 'Rất đáng thử.', 4),
+(2, 13, 'Bình thường.', 3),
+(2, 9, 'Hơi ngọt.', 3),
+(2, 5, 'Tươi ngon.', 5),
+(2, 6, 'Giá hợp lý.', 4),
+(2, 7, 'Ăn chay tốt.', 5),
+(2, 8, 'Mát lạnh.', 4);
+
+
+INSERT INTO rating_restaurant (user_id, res_id, content, rate_point) VALUES
+(1, 1, 'Không gian đẹp.', 5),
+(2, 2, 'Phục vụ nhanh.', 4),
+(2, 3, 'Giá hơi cao.', 3),
+(2, 1, 'Sạch sẽ.', 5),
+(2, 2, 'Thực đơn đa dạng.', 4),
+(2, 3, 'Quán đông.', 3),
+(2, 1, 'Chất lượng tốt.', 5),
+(2, 2, 'Hơi nhỏ.', 3);
+
+
+INSERT INTO orders (user_id, res_id, create_date) VALUES
+(1, 1, NOW()),
+(2, 2, NOW()),
+(2, 3, NOW()),
+(2, 1, NOW()),
+(2, 2, NOW()),
+(2, 3, NOW()),
+(2, 1, NOW()),
+(2, 2, NOW());
+
+INSERT INTO menu_restaurant (cate_id, res_id, create_date) VALUES
+(1, 1, NOW()),
+(2, 2, NOW()),
+(1, 3, NOW()),
+(2, 1, NOW()),
+(1, 2, NOW());
+
