@@ -123,4 +123,24 @@ public class RestaurantService implements RestaurantServiceImp {
         }
         return totalPoint/listRating.size();
     }
+
+
+    @Override
+    public List<RestaurantDTO> getRestaurantByTitle(String title) {
+        List<Restaurant> restaurantList = restaurantRepository.findByTitle(title);
+
+        List<RestaurantDTO> restaurantDTOList = new ArrayList<>();
+        for(Restaurant data : restaurantList) {
+            RestaurantDTO restaurantDTO = new RestaurantDTO();
+            restaurantDTO.setImage(data.getImage());
+            restaurantDTO.setTitle(data.getTitle());
+            restaurantDTO.setSubTitle(data.getSubtitle());
+            restaurantDTO.setAddress(data.getAddress());
+            restaurantDTO.setFreeship(data.isFreeship());
+            restaurantDTO.setRating(calculatorRating(data.getListRatingRestaurant()));
+
+            restaurantDTOList.add(restaurantDTO);
+        }
+        return restaurantDTOList;
+    }
 }

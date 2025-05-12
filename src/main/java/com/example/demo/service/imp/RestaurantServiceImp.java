@@ -1,6 +1,7 @@
 package com.example.demo.service.imp;
 
 import com.example.demo.dto.RestaurantDTO;
+import com.example.demo.dto.UserDTO;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,4 +19,5 @@ public interface RestaurantServiceImp {
 
     List<RestaurantDTO> getHomePageRestaurant();
     RestaurantDTO getDetailRestaurant(int id);
+    List<RestaurantDTO> getRestaurantByTitle(String title);
 }

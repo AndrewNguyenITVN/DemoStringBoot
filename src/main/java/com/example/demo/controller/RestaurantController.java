@@ -69,4 +69,15 @@ public class RestaurantController {
 
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
+
+    @GetMapping("/search-restaurant")
+    public ResponseEntity<?> searchRestaurantTitle(@RequestParam String title) {
+
+        ResponseData responseData = new ResponseData();
+
+        responseData.setData(restaurantServiceImp.getRestaurantByTitle(title));
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
 }
