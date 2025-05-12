@@ -52,4 +52,34 @@ public class CategoryService implements CategoryServiceImp {
 
         return listCategoryDTO;
     }
+
+    @Override
+    public boolean addCategory(String name) {
+        boolean isSussecc = false;
+        Category category = new Category();
+        category.setNameCate(name);
+        try{
+            categoryRepository.save(category);
+            isSussecc = true;
+        }catch (Exception e){
+            System.out.println("Loi add Cateroty " + e);
+        }
+        return isSussecc;
+    }
+
+
+    @Override
+    public boolean updateCategory(int id, String newName) {
+        try {
+            Category category = categoryRepository.findById(id).orElse(null);
+            if (category != null) {
+                category.setNameCate(newName);
+                categoryRepository.save(category);
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi update Category: " + e.getMessage());
+        }
+        return false;
+    }
 }

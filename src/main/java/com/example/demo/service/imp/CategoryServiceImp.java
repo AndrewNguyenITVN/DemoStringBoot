@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface CategoryServiceImp {
     List<CaterotyDTO> getCategoryHome();
+    boolean addCategory(String name);
+    boolean updateCategory(int id, String newName);
+
 }
