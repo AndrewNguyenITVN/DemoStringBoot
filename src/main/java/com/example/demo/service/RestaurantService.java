@@ -143,4 +143,56 @@ public class RestaurantService implements RestaurantServiceImp {
         }
         return restaurantDTOList;
     }
+
+    @Override
+    public boolean updateRestaurant(int id, MultipartFile file, String title, String subtitle, String description, boolean is_freeship, String address, String open_date) {
+        boolean isUpdateSuccess = false;
+        try {
+            Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
+            if (optionalRestaurant.isPresent()) {
+                Restaurant restaurant = optionalRestaurant.get();
+
+                // Nếu có file ảnh mới thì cập nhật
+                if (file != null && !file.isEmpty()) {
+                    boolean isSave = fileServiceImp.savefile(file);
+                    if (isSave) {
+                        restaurant.setImage(file.getOriginalFilename());
+                    }
+                }
+
+                restaurant.setTitle(title);
+                restaurant.setSubtitle(subtitle);
+                restaurant.setDescription(description);
+                restaurant.setAddress(address);
+                restaurant.setFreeship(is_freeship);
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                Date openDate = simpleDateFormat.parse(open_date);
+                restaurant.setOpenDate(openDate);
+
+                restaurantRepository.save(restaurant);
+                isUpdateSuccess = true;
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi update restaurant: " + e.getMessage());
+        }
+
+        return isUpdateSuccess;
+    }
+
+
+    @Override
+    public boolean deleteRestaurant(int id) {
+        try {
+            Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
+            if (optionalRestaurant.isPresent()) {
+                restaurantRepository.deleteById(id);
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi khi xóa nhà hàng: " + e.getMessage());
+        }
+        return false;
+    }
+
 }

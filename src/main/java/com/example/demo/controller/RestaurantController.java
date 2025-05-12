@@ -80,4 +80,31 @@ public class RestaurantController {
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateRestaurant(@PathVariable int id,
+                                              @RequestParam(required = false) MultipartFile file,
+                                              @RequestParam String title,
+                                              @RequestParam String subtitle,
+                                              @RequestParam String description,
+                                              @RequestParam boolean is_freeship,
+                                              @RequestParam String address,
+                                              @RequestParam String open_date) {
+
+        ResponseData responseData = new ResponseData();
+        boolean result = restaurantServiceImp.updateRestaurant(id, file, title, subtitle, description, is_freeship, address, open_date);
+        responseData.setData(result);
+
+        return new ResponseEntity<>(responseData, result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("delete/{id}")
+    public ResponseEntity<?> deleteRestaurant(@PathVariable int id) {
+        ResponseData responseData = new ResponseData();
+        boolean result = restaurantServiceImp.deleteRestaurant(id);
+        responseData.setData(result);
+
+        return new ResponseEntity<>(responseData, result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    }
+
+
 }
